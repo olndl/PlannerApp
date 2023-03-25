@@ -9,6 +9,13 @@ object TodoItemsListRepositoryImpl: TodoItemsListRepository {
 
     private var autoIncrementId = 0
 
+    init {
+        for (i in 0..9) {
+            val item = TodoItem("Make smth $i", i, true,)
+            addItem(item)
+        }
+    }
+
     override fun addItem(todo: TodoItem) {
         if (todo.id == TodoItem.UNDEFINED_ID) {
             todo.id = autoIncrementId++
