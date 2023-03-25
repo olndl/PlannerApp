@@ -16,11 +16,13 @@ class HomeViewModel : ViewModel() {
     private val deleteItemListUseCase = DeleteItemUseCase(repository)
     private val editItemListUseCase = EditItemUseCase(repository)
 
-    val listItems = MutableLiveData<List<TodoItem>>()
+    val listItems = getItemListUseCase.getItemsList()
 
-    fun getItemsList() {
-        val list = getItemListUseCase.getItemsList()
-        listItems.value = list
+    fun deleteItem(todo: TodoItem) {
+        deleteItemListUseCase.deleteItem(todo)
     }
-
+    fun changeVisibilityState(todo: TodoItem) {
+        val newTodo = todo.copy(visibility = !todo.visibility)
+        editItemListUseCase.editItem(newTodo)
+    }
 }

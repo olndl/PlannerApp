@@ -18,6 +18,5 @@ class HomeActivity : AppCompatActivity() {
         viewModel.listItems.observe(this) {
             Log.d("HomeActivity", it.toString())
         }
-        viewModel.getItemsList()
     }
 }

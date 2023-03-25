@@ -1,5 +1,6 @@
 package com.example.plannerapp.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.example.plannerapp.domain.models.TodoItem
 
 interface TodoItemsListRepository {
@@ -12,5 +13,5 @@ interface TodoItemsListRepository {
 
     fun getItemById(id: Int) : TodoItem
 
-    fun getItemsList() : List<TodoItem>
+    fun getItemsList() : LiveData<List<TodoItem>>
 }

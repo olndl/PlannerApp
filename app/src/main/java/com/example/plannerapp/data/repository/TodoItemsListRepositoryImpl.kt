@@ -1,9 +1,13 @@
 package com.example.plannerapp.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.plannerapp.domain.models.TodoItem
 import com.example.plannerapp.domain.repository.TodoItemsListRepository
 
 object TodoItemsListRepositoryImpl: TodoItemsListRepository {
+
+    private val listItems = MutableLiveData<List<TodoItem>>()
 
     private val todoList = mutableListOf<TodoItem>()
 
@@ -21,10 +25,12 @@ object TodoItemsListRepositoryImpl: TodoItemsListRepository {
             todo.id = autoIncrementId++
         }
         todoList.add(todo)
+        updateList()
     }
 
     override fun deleteItem(todo: TodoItem) {
         todoList.remove(todo)
+        updateList()
     }
 
     override fun editItem(todo: TodoItem) {
@@ -38,7 +44,11 @@ object TodoItemsListRepositoryImpl: TodoItemsListRepository {
         } ?: throw java.lang.RuntimeException("element with id: $id is not found")
     }
 
-    override fun getItemsList(): List<TodoItem> {
-        return todoList.toList() // get copy
+    override fun getItemsList(): LiveData<List<TodoItem>> {
+        return listItems // get copy
+    }
+
+    private fun updateList() {
+        listItems.value = todoList.toList()
     }
 }
